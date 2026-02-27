@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
+import { getAssetPath } from "@/src/utils/getAssetPath"
 
 /**
  * Module-level singleton callback to ensure only one audio plays at a time.
@@ -79,7 +80,7 @@ export default function VoicePlayButton({
 
     // Create or reuse audio element
     if (!audioRef.current) {
-      audioRef.current = new Audio(voiceSamplePath)
+      audioRef.current = new Audio(getAssetPath(voiceSamplePath))
 
       audioRef.current.addEventListener("ended", () => {
         setIsPlaying(false)

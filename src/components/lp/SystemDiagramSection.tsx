@@ -4,6 +4,7 @@ import Image from "next/image"
 import { CHARACTERS } from "@/src/constants/characters"
 import { useScrollReveal } from "@/src/hooks/useScrollReveal"
 import SectionHeader from "@/src/components/lp/SectionHeader"
+import { getAssetPath } from "@/src/utils/getAssetPath"
 
 const mainAgent = CHARACTERS[0]
 const subAgents = CHARACTERS.filter((c) => c.id !== 0)
@@ -204,7 +205,7 @@ export default function SystemDiagramSection() {
                 <circle cx={CENTER_X} cy={CENTER_Y} r={MAIN_SIZE} />
               </clipPath>
               <image
-                href={mainAgent.imagePath}
+                href={getAssetPath(mainAgent.imagePath)}
                 x={CENTER_X - MAIN_SIZE}
                 y={CENTER_Y - MAIN_SIZE}
                 width={MAIN_SIZE * 2}
@@ -253,7 +254,7 @@ export default function SystemDiagramSection() {
                     <circle cx={coords.x} cy={coords.y} r={SUB_SIZE} />
                   </clipPath>
                   <image
-                    href={character.imagePath}
+                    href={getAssetPath(character.imagePath)}
                     x={coords.x - SUB_SIZE}
                     y={coords.y - SUB_SIZE}
                     width={SUB_SIZE * 2}
