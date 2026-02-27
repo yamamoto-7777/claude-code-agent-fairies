@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { CHARACTERS } from "@/src/constants/characters"
+import { getAssetPath } from "@/src/utils/getAssetPath"
 import { useScrollReveal } from "@/src/hooks/useScrollReveal"
 import SectionHeader from "@/src/components/lp/SectionHeader"
 import SkillBar from "@/src/components/lp/SkillBar"
@@ -31,7 +32,7 @@ export default function MainAgentSection() {
           <div className="flex justify-center">
             <div className="relative w-64 sm:w-80">
               <Image
-                src={mainAgent.standingArtPath}
+                src={getAssetPath(mainAgent.standingArtPath)}
                 alt={`${mainAgent.name} - ${mainAgent.responsibility}`}
                 width={320}
                 height={480}

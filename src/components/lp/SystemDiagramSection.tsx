@@ -321,7 +321,7 @@ export default function SystemDiagramSection() {
           <div className="flex items-center gap-4 bg-white/5 backdrop-blur border border-orange-400/30 rounded-xl p-4 w-full max-w-sm">
             <div className="relative w-14 h-14 rounded-full overflow-hidden shrink-0 border-2 border-orange-400/60">
               <Image
-                src={mainAgent.imagePath}
+                src={getAssetPath(mainAgent.imagePath)}
                 alt={`${mainAgent.name} - ${mainAgent.responsibility}`}
                 fill
                 sizes="56px"
@@ -351,7 +351,7 @@ export default function SystemDiagramSection() {
                     <div className="w-px h-4 bg-slate-500/30" aria-hidden="true" />
                     <div className={`relative w-10 h-10 rounded-full overflow-hidden border-2 ${character.themeColor.border}`}>
                       <Image
-                        src={character.imagePath}
+                        src={getAssetPath(character.imagePath)}
                         alt={`${character.name} - ${character.responsibility}`}
                         fill
                         sizes="40px"

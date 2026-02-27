@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import { getAssetPath } from "@/src/utils/getAssetPath"
 import { useScrollReveal } from "@/src/hooks/useScrollReveal"
 import SkillBar from "@/src/components/lp/SkillBar"
 import VoicePlayButton from "@/src/components/lp/VoicePlayButton"
@@ -35,7 +36,7 @@ export default function SubAgentCard({
         >
           <div className="relative w-64 sm:w-80">
             <Image
-              src={character.standingArtPath}
+              src={getAssetPath(character.standingArtPath)}
               alt={`${character.name} - ${character.responsibility}`}
               width={320}
               height={480}
@@ -60,7 +61,7 @@ export default function SubAgentCard({
         <div className="flex justify-center">
           <div className="relative w-56 sm:w-64">
             <Image
-              src={character.standingArtPath}
+              src={getAssetPath(character.standingArtPath)}
               alt={`${character.name} - ${character.responsibility}`}
               width={256}
               height={384}

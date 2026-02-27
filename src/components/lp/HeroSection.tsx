@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { CHARACTERS } from "@/src/constants/characters"
+import { getAssetPath } from "@/src/utils/getAssetPath"
 
 const sparkles = [
   { top: "10%", left: "15%", delay: "0s" },
@@ -73,7 +74,7 @@ export default function HeroSection() {
               className={`absolute inset-0 rounded-full border-2 ${character.themeColor.border} z-10 pointer-events-none`}
             />
             <Image
-              src={character.imagePath}
+              src={getAssetPath(character.imagePath)}
               alt={`${character.name} - ${character.responsibility}`}
               fill
               sizes="(max-width: 640px) 80px, 100px"
