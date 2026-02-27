@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #090e1a;
+  --foreground: #e2e8f0;
 }
 
 @theme inline {
@@ -10,17 +10,205 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --animate-fairy-float: fairy-float 4s ease-in-out infinite;
+  --animate-fairy-glow: fairy-glow 3s ease-in-out infinite;
+  --animate-card-enter: card-enter 0.5s ease-out both;
+  --animate-fade-in-up: fade-in-up 0.6s ease-out both;
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+  --animate-sparkle: sparkle-burst 2.5s ease-in-out infinite;
+  --animate-cursor-blink: cursor-blink 1s step-end infinite;
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100dvh;
+  background:
+    /* deep blue light streaks */
+    radial-gradient(ellipse 200px 600px at 15% 0%, rgba(96, 165, 250, 0.1) 0%, transparent 70%),
+    radial-gradient(ellipse 150px 500px at 50% 0%, rgba(147, 197, 253, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 180px 550px at 80% 0%, rgba(103, 232, 249, 0.09) 0%, transparent 65%),
+    /* fairy light particles */
+    radial-gradient(circle 3px at 20% 30%, rgba(147, 197, 253, 0.3) 0%, transparent 100%),
+    radial-gradient(circle 2px at 70% 20%, rgba(103, 232, 249, 0.25) 0%, transparent 100%),
+    radial-gradient(circle 4px at 45% 60%, rgba(167, 243, 208, 0.15) 0%, transparent 100%),
+    radial-gradient(circle 2px at 85% 45%, rgba(129, 140, 248, 0.25) 0%, transparent 100%),
+    radial-gradient(circle 3px at 10% 70%, rgba(96, 165, 250, 0.2) 0%, transparent 100%),
+    radial-gradient(circle 2px at 60% 85%, rgba(103, 232, 249, 0.15) 0%, transparent 100%),
+    /* midnight navy gradient */
+    linear-gradient(
+      180deg,
+      #090e1a 0%,
+      #0f172a 15%,
+      #0c1526 35%,
+      #091220 55%,
+      #0d1a30 75%,
+      #080d18 100%
+    );
+  background-attachment: fixed;
+}
+
+/* ========================================
+   Keyframe Animations
+   ======================================== */
+
+/* Fairy float - particle Y-axis floating (4-6s) */
+@keyframes fairy-float {
+  0%, 100% { opacity: 0.3; transform: translateY(0) scale(1); }
+  50%      { opacity: 0.7; transform: translateY(-20px) scale(1.2); }
+}
+
+/* Fairy glow - particle luminance pulse (3s) */
+@keyframes fairy-glow {
+  0%, 100% { opacity: 0.2; }
+  50%      { opacity: 0.5; }
+}
+
+/* Card enter - fade-in + slide up (0.5s) */
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in up - scroll reveal slide (0.6s) */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pulse glow - main agent image ring (2s) */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(148, 163, 184, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(148, 163, 184, 0.6);
+  }
+}
+
+/* Sparkle burst - hero particle sparkle (2.5s) */
+@keyframes sparkle-burst {
+  0%   { opacity: 0; transform: scale(0) rotate(0deg); }
+  50%  { opacity: 1; transform: scale(1) rotate(180deg); }
+  100% { opacity: 0; transform: scale(0) rotate(360deg); }
+}
+
+/* Skill fill - skill bar progress (0.8s, ease-out) */
+@keyframes skill-fill {
+  from { width: 0%; }
+  to   { width: var(--skill-value); }
+}
+
+/* Cursor blink - code editor cursor (1s, step-end) */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* Voice wave - audio waveform bars */
+@keyframes voice-wave {
+  0%, 100% { height: 4px; }
+  50%      { height: 20px; }
+}
+
+/* Voice button pulse - playing state glow */
+@keyframes voice-btn-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 var(--voice-btn-glow, rgba(251, 146, 60, 0.4));
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 12px 4px var(--voice-btn-glow, rgba(251, 146, 60, 0.4));
+    opacity: 0.85;
+  }
+}
+
+/* ========================================
+   Scroll Reveal
+   ======================================== */
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Trigger skill bar fill animation when scroll-revealed */
+.scroll-reveal.is-visible .skill-bar-fill {
+  animation: skill-fill 0.8s ease-out var(--skill-delay, 0s) both;
+  width: var(--skill-value);
+}
+
+/* ========================================
+   Skill Bar
+   ======================================== */
+
+.skill-bar-fill {
+  width: 0%;
+}
+
+/* ========================================
+   Character Card Hover Glow
+   ======================================== */
+
+.character-card:hover .character-card__image {
+  box-shadow: var(--card-glow, 0 0 20px rgba(255, 255, 255, 0.3));
+}
+
+/* ========================================
+   Tailwind Utility Classes (explicit)
+   ======================================== */
+
+.animate-sparkle {
+  animation: sparkle-burst 2.5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-card-enter {
+  animation: card-enter 0.5s ease-out both;
+}
+
+.animate-cursor-blink {
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* ========================================
+   Voice Wave Bars
+   ======================================== */
+
+.voice-bar {
+  animation: voice-wave 0.8s ease-in-out infinite;
+}
+
+.voice-bar:nth-child(1) { animation-delay: 0s; }
+.voice-bar:nth-child(2) { animation-delay: 0.1s; }
+.voice-bar:nth-child(3) { animation-delay: 0.2s; }
+.voice-bar:nth-child(4) { animation-delay: 0.15s; }
+.voice-bar:nth-child(5) { animation-delay: 0.05s; }
+
+/* ========================================
+   Voice Button Playing State
+   ======================================== */
+
+.voice-btn-playing {
+  animation: voice-btn-pulse 1.2s ease-in-out infinite;
 }
